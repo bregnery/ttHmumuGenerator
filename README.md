@@ -21,4 +21,14 @@ Then, clone this git repository and compile CMSSW
     scram b
     cmsenv
   
-Next, move into ttHmumuGenerator.
+Next, move into ttHmumuGenerator. Then, update the email, working directory, and output directory in generator.submit and MINIAODgenerator.submit. Also, update the input and output directories in convertMC_MINIAOD.py. The number of events per job can be adjusted in h2mu_tth_M125GeV_13TeV_FULLSIM_cfg.py and the number of jobs can be adjusted in generator.submit (1-maxJobs).
+
+Then, generate the ttHmumu sample by submitting a job to HPC using the generator.submit script.
+
+    qsub generator.submit
+
+Finally, convert these files to miniAOD format by submitting a job to HPC with the MINIAODgenerator.submit script.
+
+    qsub MINIAODgenerator.submit    
+
+For ntuplizing stages see UfHMuMuCode.
