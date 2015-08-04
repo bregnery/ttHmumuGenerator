@@ -1,0 +1,22 @@
+#! /bin/sh
+#PBS -r n
+#PBS -N ttHgenMINIAOD
+#PBS -o ttHgenMINIAOD.out
+#PBS -e ttHgenMINIAOD.err
+#PBS -m ae
+#PBS -M bregnery@ufl.edu
+#PBS -l walltime=00:40:00:00
+#PBS -l pmem=58000mb
+#PBS -l nodes=1:ppn=1
+#PBS -t 1 
+
+cd /scratch/osg/bregnery/CMSSW_7_4_2/src/MCdata
+eval `scram runtime -sh`
+
+date
+hostname
+pwd
+
+cmsRun convertMC_MINIAOD.py
+date
+
