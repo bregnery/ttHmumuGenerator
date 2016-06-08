@@ -8,7 +8,7 @@
 #PBS -l walltime=00:40:00:00
 #PBS -l pmem=9900mb
 #PBS -l nodes=1:ppn=1
-#PBS -t 1 
+#PBS -t 7001-8000 
 
 cd /scratch/osg/bregnery/CMSSW_7_4_2/src/ttHmumu
 eval `scram runtime -sh`

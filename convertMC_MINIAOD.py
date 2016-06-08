@@ -4,6 +4,7 @@
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
 # with command line options: miniAOD-prod -s PAT --eventcontent MINIAODSIM --runUnscheduled --mc --filein stuff.root --conditions MCRUN2_74_V9::All --no_exec
 import FWCore.ParameterSet.Config as cms
+import sys
 
 process = cms.Process('PAT')
 
@@ -24,12 +25,35 @@ process.maxEvents = cms.untracked.PSet(
 )
 
 # Input source
+inputFile=""
+outputFile=""
+
+def getVal(arg):
+	i=0
+	while i < len(arg) and arg[i] != "=": i+=1
+	return arg[i+1:]
+
+# loop over arguments
+for i in range(1,len(sys.argv)):
+	print "[arg "+str(i)+"] : ", sys.argv[i] 
+	
+	if "input" in sys.argv[i]:
+		inputFile=getVal(sys.argv[i])
+		#print "oHERE"
+		
+	if "output" in sys.argv[i] :
+		outputFile=getVal(sys.argv[i])
+		#print "jHERE"
+
+print inputFile
+print outputFile
+
 process.source = cms.Source("PoolSource",
     secondaryFileNames = cms.untracked.vstring(),
     fileNames = cms.untracked.vstring('stuff.root')
 )
 import glob
-ttHfiles = glob.glob("/scratch/osg/bregnery/CMSSW_7_4_2/src/MCdata/ttHmumu_*.root")
+ttHfiles = glob.glob(inputFile)
 ttHfiles = ["file:"+x for x in ttHfiles]
 process.source.fileNames = cms.untracked.vstring(ttHfiles)
 
@@ -51,7 +75,7 @@ process.MINIAODSIMoutput = cms.OutputModule("PoolOutputModule",
     compressionAlgorithm = cms.untracked.string('LZMA'),
     eventAutoFlushCompressedSize = cms.untracked.int32(15728640),
     outputCommands = process.MINIAODSIMEventContent.outputCommands,
-    fileName = cms.untracked.string('ttHmumu-MINIAOD.root'),
+    fileName = cms.untracked.string(outputFile),
     dataset = cms.untracked.PSet(
         filterName = cms.untracked.string(''),
         dataTier = cms.untracked.string('')
