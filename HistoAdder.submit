@@ -1,0 +1,22 @@
+ -r n
+#PBS -N ttHgenAdd
+#PBS -o ttHgenAdd.out
+#PBS -e ttHgenAdd.err
+#PBS -m ae
+#PBS -M bregnery@ufl.edu
+#PBS -l walltime=00:40:00:00
+#PBS -l pmem=150000mb
+#PBS -l nodes=1:ppn=1
+#PBS -t 1 
+
+cd /scratch/osg/bregnery/CMSSW_7_4_2/src/ttHmumu
+eval `scram runtime -sh`
+
+date
+hostname
+pwd
+
+hadd ttHmumu-MINIAOD-test.root *.root
+
+date
+
