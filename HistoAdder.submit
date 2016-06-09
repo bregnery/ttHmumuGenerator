@@ -1,4 +1,5 @@
- -r n
+#! /bin/sh
+#PBS -r n
 #PBS -N ttHgenAdd
 #PBS -o ttHgenAdd.out
 #PBS -e ttHgenAdd.err
